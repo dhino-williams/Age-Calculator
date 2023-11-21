@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap" rel="stylesheet">
+    <style>
+        .container {
+            font-family: 'Signika Negative', sans-serif;
+            box-sizing: border-box;
+            background: linear-gradient(90deg, rgb(138, 138, 228), rgb(83, 160, 188));
+            width: 100%;
+            min-height: 100vh;
+            padding: 1px;
+        }
+
+        .calculator {
+            font-size: large;
+            margin-left: 10%;
+            margin-top: 10%;
+        }
+
+        .calculator span {
+            color: yellow;
+        }
+
+        .input {
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            border-radius: 40px;
+        }
+
+        button {
+            margin-left: 10%;
+            font-size: 15px;
+        }
+
+        #result {
+            font-size: 20px;
+            color: aliceblue;
+            margin-top: 10%;
+            margin-right: 50%;
+        }
+
+        #result span {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="calculator">
+            <h1><span>Age Calculator</span></h1>
+            <h3>CodeAlpha Project</h3>
+            <div class="input">
+                <input type="date" id="dates">
+                <button onclick="calculateage()">Calculate</button>
+                <p id="result">
+
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let input = document.getElementById("dates");
+        let d = new Date();
+        input.max = d.toISOString().split("T")[0];
+        let result = document.getElementById("result");
+
+        function calculateage() {
+            let birthday = new Date(input.value);
+            let day1 = birthday.getDate();
+            let month1 = birthday.getMonth();
+            let year1 = birthday.getFullYear();
+
+            let currentdate = new Date();
+            let day2 = currentdate.getDate();
+            let month2 = currentdate.getMonth();
+            let year2 = currentdate.getFullYear();
+
+            let day3, month3, year3;
+            year3 = year2 - year1;
+            if (month2 >= month1) {
+                month3 = month2 - month1;
+            }
+            else {
+                year3--;
+                month3 = 12 + month2 - month1;
+            }
+            if (day2 >= day1) {
+                day3 = day2 - day1;
+            }
+            else {
+                month3--;
+                day3 = getDaysInMonth(year1, month1) + day2 - day1;
+            }
+            if (month3 < 0) {
+                month3 = 11;
+                year3--;
+            }
+            result.innerHTML = `You are <span>${year3}</span> Years <span>${month3}</span> Months and <span>${day3}</span> Days old`;
+        }
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+    </script>
+</body>
+
+</html>
