@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        .container{
+            width: 100%;
+            padding: 20%;
+            font-size: x-large;
+            box-sizing:border-box ;
+            margin: 10px;
+            background: linear-gradient(45deg,black,white);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TO DO LIST</h1>
+        <label for="tasks">Enter the Tasks:</label>
+        <input type="text" placeholder="Enter here" required id="input">
+        <button type="submit" id="button">+</button>
+        <div id="contents">
+
+        </div>
+    </div>
+    <script>
+        let input=document.getElementById("input");
+        let button=document.getElementById("button");
+        let contents=document.getElementById("contents");
+        button.addEventListener('click',function(){
+            var para=document.createElement('p');
+            para.style.backgroundColor="white";
+            para.style.color="black";
+            para.innerText=input.value;
+            contents.append(para);
+            input.value="";
+        })
+        input.addEventListener("keypress",function(Enter){
+            if(Enter.key==="Enter"){
+                Enter.preventDefault();
+                document.getElementById("button").click();
+            }
+        })
+    </script>
+</body>
+</html>
