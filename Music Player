@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: cursive;
+        }
+
+        .music {
+            background: wheat;
+            width: 400px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .song {
+            width: 220px;
+            border-radius: 70%;
+            border: 8px solid black;
+        }
+
+        #forback {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 40px 0;
+        }
+
+        #forback::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background: black;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: solid 8px white;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls div {
+            width: 60px;
+            height: 60px;
+            margin: 20px;
+            background: black;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: wheat;
+            cursor: pointer;
+        }
+
+        .controls div:nth-child(2) {
+            transform: scale(1.5);
+        }
+
+        .controls div:nth-child(2):hover {
+            background: white;
+            color: black;
+        }
+
+        .controls div:nth-child(1):hover {
+            background: white;
+            color: black;
+        }
+
+        .controls div:nth-child(3):hover {
+            background: white;
+            color: black;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/c9f6b0a731.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="music">
+            <img src="arr.jpg" alt="" class="song">
+            <h1>Sahana Saral Thoo</h1>
+            <p>Udit Narayan,Chinmayi</p>
+            <audio id="songs">
+                <source src="sahana.mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="forback">
+            <div class="controls">
+                <div onclick="forward()">
+                    <i class="fa-solid fa-backward" id="forward"></i>
+                </div>
+                <div onclick="playPause()">
+                    <i class="fa-solid fa-play" id="ctrlicon"></i>
+                </div>
+                <div onclick="backward()">
+                    <i class="fa-solid fa-forward" id="backward"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let forback = document.getElementById("forback");
+        let song = document.getElementById("songs");
+        let ctrlicon = document.getElementById("ctrlicon");
+        song.onloadedmetadata = function () {
+            forback.max = song.duration;
+            forback.value = song.currentTime;
+        }
+        function playPause() {
+            if (ctrlicon.classList.contains("fa-pause")) {
+                song.pause();
+                ctrlicon.classList.remove("fa-pause");
+                ctrlicon.classList.add("fa-play");
+            }
+            else {
+                song.play();
+                ctrlicon.classList.remove("fa-play");
+                ctrlicon.classList.add("fa-pause");
+            }
+        }
+        if (song.play()) {
+            setInterval(() => {
+                forback.value = song.currentTime;
+            }, 500);
+        }
+        forback.onchange = function () {
+            song.play();
+            song.currentTime = forback.value;
+            ctrlicon.classList.add("fa-pause");
+            ctrlicon.classList.remove("fa-play");
+        }
+    </script>
+</body>
+
+</html>
